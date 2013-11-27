@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		
+	<link href="resources/css/bootstrap.css" rel="stylesheet">
+	<style>
+		body {
+		padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+		}
+	</style>
+	<link href="resources/css/bootstrap-responsive.css" rel="stylesheet">
+	
+	</head>
+	<body>
+	
+	<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">         
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Project name</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              
+            </ul>
+             <form class="navbar-form pull-right">
+              <input class="span2" type="text" placeholder="Email" id="email">
+              <input class="span2" type="password" placeholder="Password" id="password">
+              <button type="submit" class="btn" id="signIn">Sign in</button>
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+	
+	
+	<table class="table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Username</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr onClick=test()>
+				<td>1</td>
+				<td>Mark</td>
+				<td>Otto</td>
+				<td>@mdo</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>Jacob</td>
+				<td>Thornton</td>
+				<td>@fat</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>Larry</td>
+				<td>the Bird</td>
+				<td>@twitter</td>
+			</tr>
+		</tbody>
+	</table>	
+		
+		
+	 <!-- Le javascript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="resources/js/jquery-2.0.3.js"></script>
+	<script src="resources/js/bootstrap.js"></script>
+	
+	<script type="text/javascript">
+	
+	$("#signIn").click( function () {
+		var emailStr = $("#email").toString();
+	   console.log(emailStr);
+       if($("#email").text() == "email" && $("#password").text() == "password" ){
+    	   alert("로긴성공");
+       }else{
+    	   alert("로긴실패");
+       }
+    });
+	
+	var test = function test(){
+		console.log("test");
+	}
+	
+	</script>	
+	</body>
+</html>

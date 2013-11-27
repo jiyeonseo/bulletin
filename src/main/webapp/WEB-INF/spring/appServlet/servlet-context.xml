@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+						http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- JS/CSS 사용을 위해 resource path 설정. -->
+	<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
+	
+	<!-- 어노테이션을 사용할꺼다 -->
+	<mvc:annotation-driven/>
+	
+	<!-- 사용범위 설정 -->
+	<context:component-scan base-package="com.jiyeon.bulletin" />
+	
+	
+	<!-- 확장자의 이름을 보고 value에 맞는 뷰 리졸버를 찾게 도와준다 -->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="text/html"/>
+				<entry key="xml" value="application/xml" />
+				<entry key="json" value="application/json" />
+			</map>
+		</property>
+		
+		<!-- 여기서 우리는 VelocityViewResolver를 사용하겠다.  -->
+		<property name="viewResolvers">
+			<list>
+				<bean id="velocityViewResolver"
+					class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+					<property name="suffix" value=".html"></property>
+					<property name="contentType" value="text/html; charset=UTF-8" />
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<!--xml뷰를 위해 MashallingView를 사용하겠다 -->
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+					<!-- 고로 mashaller를 등록해줘야한다 -->
+					<property name="marshaller">
+						<bean class="org.springframework.oxm.xstream.XStreamMarshaller"/>
+					</property>
+				</bean>
+				<!-- "json" MappingJacksonJsonView를 등록  -->
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="velocityConfig"
+		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<!--  velocity template 파일이 잇는 경로  -->
+		<property name="resourceLoaderPath" value="/WEB-INF/views/" />
+		<property name="velocityProperties">
+			<props>
+				<!-- 인코딩과 같은 설정 값들을 여기서 설정해준다.  -->
+				<prop key="input.encoding">UTF-8</prop>
+				<prop key="output.encoding">UTF-8</prop>
+				<prop key="velocimacro.library.autoreload">false</prop>
+				<prop key="directive.foreach.counter.name">velocityCount</prop>
+				<prop key="directive.foreach.counter.initial.value">0</prop>
+				<prop key="velocimacro.library.autoreload">false</prop>
+			</props>
+		</property>
+	</bean>
+	
+</beans>
